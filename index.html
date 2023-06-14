@@ -1,29 +1,3 @@
-<!--<!DOCTYPE html>
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Olaf"/>
-    <title>Olaf Langhorst</title>
-    <style>
-        body {
-          background-color: #c1e4f6; /* Replace this hex code with the pastel blue color you prefer */
-        }
-      </style>
-</head>
-<body>
-
-    
-    <h1>Olaf Langhorst</h1>
-    <p>Hi, I'm Olaf, a <strong>design engineer</strong> in the making. 
-        I have a <em>bachelors</em> in mechanical engineering and a masters degree in Integrated product design. I work at a start-up creating the next generation of heat pumps. </p>
-    <h4>some information about myself</h4>
-    <a href="www.google.com">google</a>
-    <a href="./Portfolio_Olaf_IO Master.pdf" target="blank_">My portfolio</a>
-</body>
-</html>
--->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -31,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Olaf"/>
     <title>Olaf Langhorst</title>
+    <link rel="stylesheet" href="./style.css"/>
     <style>
         /* Add CSS styles for aesthetic enhancements */
         body {
@@ -38,18 +13,26 @@
             margin: 0;
             padding: 20px;
             background-color: #f3f3f3;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            grid-gap: 20px;
+            align-items: center;
+            justify-items: center;
+            min-height: 100vh;
         }
 
         h1 {
             font-size: 36px;
             color: #333;
             margin-bottom: 10px;
+            text-align: left;
         }
 
         p {
             font-size: 18px;
             color: #666;
             margin-bottom: 20px;
+            text-align: left;
         }
 
         strong {
@@ -64,6 +47,7 @@
             font-size: 24px;
             color: #555;
             margin-bottom: 10px;
+            text-align: left;
         }
 
         a {
@@ -71,6 +55,7 @@
             color: #007bff;
             transition: opacity 0.3s;
         }
+
         /* Styles for the links */
         .footer-links {
             display: flex;
@@ -82,9 +67,10 @@
             display: inline-block;
             background-color: black;
             color: white;
-            padding: 10px 20px;
+            padding:3%;
             text-decoration: none;
         }
+
         a:hover {
             opacity: 0.7;
         }
@@ -99,26 +85,133 @@
             }
         }
 
-        h1, p, h4, a {
-            animation: fadeIn 1s ease-in-out;
+        h1, p, h4, a, img {
+            animation: fadeIn 2s ease-in-out forwards;
         }
+
+        /* Add dynamic aesthetic component */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(45deg, #ff00aa, #00aaff, #00ffaa, #ffaa00);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        #magnifier {
+                position: fixed;
+                z-index: 9999;
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                border: 2px solid #333;
+                overflow: hidden;
+                pointer-events: none;
+                visibility: hidden;
+                transform: translate(-50%, -50%);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: 100%;
+            }
     </style>
-    <script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            var audio = new Audio('./nightlife-michael-kobrin-95bpm-3783'); /* Replace with the path to your jazz music */
-            audio.play();
-        });
-    </script>
+
 </head>
 <body>
-    <h1>Olaf Langhorst</h1>
-    <p>Hi, I'm Olaf, a <strong>design engineer</strong> in the making. 
-        I have a <em>bachelors</em> in mechanical engineering and a masters degree in Integrated product design. I work at a start-up creating the next generation of heat pumps.</p>
-    <h4>some information about myself</h4>
-    <div class="footer-links">
-        <a href="https://www.google.com">Google</a>
-        <a href="./Portfolio_Olaf_IO Master.pdf" target="_blank">My portfolio</a>
+    <div id="magnifier"></div>
+    <div>
+        <img src="./arnold.jfif" alt="headshot of olaf" />
     </div>
-    <img src="./arnold.jfif" alt="headshot of olaf" width="200"/>
+    <div>
+        <h1>Olaf Langhorst</h1>
+        <p>Hi, I'm Olaf, a <strong>design engineer</strong> in the making. 
+            I have a <em>bachelors</em> in mechanical engineering and a masters degree in Integrated product design. I work at a start-up creating the next generation of heat pumps.</p>
+        <h5>some information about myself</h5>
+        <div class="footer-links">
+            <a href="https://www.google.com">Google</a>
+            <a href="./Portfolio_Olaf_IO Master.pdf" target="_blank">My portfolio</a>
+        </div>
+    </div>
+    <script>
+        // Get references to the magnifier element and the image
+        const magnifier = document.getElementById('magnifier');
+        const image = document.querySelector('img');
+        const textElements = document.querySelectorAll('h1, p, h5');
+
+        // Add event listeners for mouse movement
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseleave', handleMouseLeave);
+
+        function handleMouseMove(event) {
+            // Get the cursor position
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            // Set the magnifier position to the cursor position
+            magnifier.style.left = mouseX + 'px';
+            magnifier.style.top = mouseY + 'px';
+
+            // Set the background image of the magnifier to the portion of the image under the cursor
+            magnifier.style.backgroundImage = `url(${image.src})`;
+            magnifier.style.backgroundPosition = `-${mouseX - 100}px -${mouseY - 100}px`;
+
+            // Check if the mouse is hovering over a text element
+            const isHoveringText = Array.from(textElements).some(element => {
+                const textRect = element.getBoundingClientRect();
+                return (
+                    mouseX >= textRect.left &&
+                    mouseX <= textRect.right &&
+                    mouseY >= textRect.top &&
+                    mouseY <= textRect.bottom
+                );
+            });
+
+            // Apply magnification to text elements if the mouse is hovering over them
+            if (isHoveringText) {
+                textElements.forEach(element => {
+                    const textX = element.getBoundingClientRect().left;
+                    const textY = element.getBoundingClientRect().top;
+                    const relativeX = mouseX - textX;
+                    const relativeY = mouseY - textY;
+                    const scale = 2; // Adjust the scale factor as needed
+
+                    element.style.transform = `scale(${scale}) translate(${(relativeX - relativeX * scale) / scale}px, ${(relativeY - relativeY * scale) / scale}px)`;
+                });
+            } else {
+                // Reset the transform for text elements if the mouse is not hovering over them
+                textElements.forEach(element => {
+                    element.style.transform = 'none';
+                });
+            }
+
+            // Show the magnifier
+            magnifier.style.visibility = 'visible';
+        }
+
+        function handleMouseLeave() {
+            // Hide the magnifier when the cursor leaves the document
+            magnifier.style.visibility = 'hidden';
+
+            // Reset the transform for text elements
+            textElements.forEach(element => {
+                element.style.transform = 'none';
+            });
+        }
+    </script>
 </body>
 </html>
